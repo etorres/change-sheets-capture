@@ -1,0 +1,27 @@
+service: change-sheets-capture
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  stage: dev
+  runtime: nodejs16.x
+  profile: dev-aws-profile
+  region: eu-west-1
+  memorySize: 128
+  timeout: 29
+  logRetentionInDays: 14
+  deploymentMethod: direct
+  versionFunctions: false
+
+package:
+  patterns:
+    - 'target/scala-2.13/npm-package/**'
+
+functions:
+  echo:
+    handler: index.ChangeSheetsCaptureHandler
+    events:
+      - httpApi:
+          method: get
+          path: /echo
